@@ -25,24 +25,34 @@ public class MainActivity extends ListActivity {
 
         List values = studentDBoperations.getAllStudents();
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.simple_list_1,values);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,values);
 
         setListAdapter(adapter);
 
     }
-    public  void addUser(View view){
-        ArrayAdapter adapter =
+    public void deleteFirstUser(View view) {
 
-                (() .0)
+        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
+        StudentClass stud = null;
 
+        if (getListAdapter().getCount() > 0) {
+            stud = (StudentClass) getListAdapter().getItem(0);
+            studentDBoperations.deleteStudent(stud);
+            adapter.remove(stud);
+        }
 
+    }
 
+    @Override
+    protected void onResume() {
+        studentDBoperations.open();
+        super.onResume();
+    }
 
-
-
-        ............................................
-
-
+    @Override
+    protected void onPause() {
+        studentDBoperations.close();
+        super.onPause();
     }
 
 }
